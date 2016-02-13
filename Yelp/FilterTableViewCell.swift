@@ -9,5 +9,6 @@
 import UIKit
 
 class FilterTableViewCell: UITableViewCell {
-
+    @IBOutlet weak var cellLabel: UILabel!
+    @IBOutlet weak var cellSwitch: UISwitch!
 }

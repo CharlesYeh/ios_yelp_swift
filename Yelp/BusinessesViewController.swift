@@ -32,7 +32,7 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
         self.updateListing("")
     }
     
-    func updateListing(term: String) {        
+    func updateListing(term: String) {
         Business.searchWithTerm(
             term,
 //            sort: filterType,
