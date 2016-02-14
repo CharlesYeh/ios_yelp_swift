@@ -19,7 +19,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         ("Deal", ["Offering a Deal"]),
         ("Distance", ["Auto", "0.3 miles", "1 mile", "5 miles", "20 miles"]),
         ("Sort By", ["Best Match", "Distance", "Rating", "Most Reviewed"]),
-        ("Category", []),
+        ("Categories", []),
     ]
     
     let filterCategories = FilterViewController.categories()
@@ -76,13 +76,31 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
 
     func switchCell(switchCell: FilterTableViewCell, didChangeValue value: Bool) {
-        
         if let indexPath = filtersTableView.indexPathForCell(switchCell) {
-            var sectionStates = switchStates[indexPath.section] ?? [Int: Bool]()
-        
-            sectionStates[indexPath.row] = value
-            switchStates[indexPath.section] = sectionStates
+            setSwitchState(indexPath.section, row: indexPath.row, value: value)
+            
+            // if in the first 3 sections, make sure only one row is on
+            if indexPath.section < 3 {
+                for (row, _) in filters[indexPath.section].1.enumerate() {
+                    if row == indexPath.row {
+                        continue
+                    }
+                    
+                    setSwitchState(indexPath.section, row: row, value: false)
+                    if let otherCell = filtersTableView.cellForRowAtIndexPath(NSIndexPath(forRow: row, inSection: indexPath.section)) as? FilterTableViewCell {
+                        
+                        otherCell.cellSwitch.setOn(false, animated: true)
+                    }
+                }
+            }
+            
         }
+    }
+    
+    func setSwitchState(section: Int, row: Int, value: Bool) {
+        var sectionStates = switchStates[section] ?? [Int: Bool]()
+        sectionStates[row] = value
+        switchStates[section] = sectionStates
     }
     
     func getSectionRow(section: Int, row: Int) -> String {
