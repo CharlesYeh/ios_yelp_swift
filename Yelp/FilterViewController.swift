@@ -8,6 +8,10 @@
 
 import UIKit
 
+enum FilterSections: Int {
+    case Deal = 0, Distance, SortBy, Categories
+}
+
 class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SwitchCellDelegate {
     
     @IBOutlet weak var cancelButton: UIButton!
@@ -33,15 +37,15 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func initSwitchStates(deal: Bool, distance: Float, sortBy: CustomYelpSortMode, categories: [String]) {
         
-        switchStates[0] = [0: deal]
-        switchStates[1] = [distanceToSwitchStateIndex(distance): true]
-        switchStates[2] = [sortBy.rawValue: true]
+        switchStates[FilterSections.Deal.rawValue] = [0: deal]
+        switchStates[FilterSections.Distance.rawValue] = [distanceToSwitchStateIndex(distance): true]
+        switchStates[FilterSections.SortBy.rawValue] = [sortBy.rawValue: true]
         
-        switchStates[3] = [Int: Bool]()
+        switchStates[FilterSections.Categories.rawValue] = [Int: Bool]()
         for (index, category) in filterCategories.enumerate() {
             if let code = category["code"] as? String {
                 if categories.contains(code) {
-                    self.switchStates[3]![index] = true
+                    self.switchStates[FilterSections.Categories.rawValue]![index] = true
                 }
             }
         }
@@ -56,7 +60,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         let vc = self.navigationController!.topViewController as! FiltersDelegate
         
-        let deal = switchStates[0]?[0] ?? false
+        let deal = switchStates[FilterSections.Deal.rawValue]?[0] ?? false
         let distance = getDistance()
         let sortBy = getSortBy()
         let categories = getCategories()
@@ -70,19 +74,23 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 4
+        return filters.count
     }
 
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        
         return self.filters[section].0
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 3 {
+        if section == FilterSections.Categories.rawValue {
             return self.filterCategories.count
         } else {
-            return self.filters[section].1.count
+            if section == FilterSections.Distance.rawValue && self.switchStates[FilterSections.Distance.rawValue]?[0] ?? false {
+                // if distance, only expand if not Auto
+                return 1
+            } else {
+                return self.filters[section].1.count
+            }
         }
     }
     
@@ -101,23 +109,38 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     func switchCell(switchCell: FilterTableViewCell, didChangeValue value: Bool) {
         if let indexPath = filtersTableView.indexPathForCell(switchCell) {
-            setSwitchState(indexPath.section, row: indexPath.row, value: value)
             
             // if in the first 3 sections, make sure only one row is on
-            if indexPath.section < 3 {
-                for (row, _) in filters[indexPath.section].1.enumerate() {
-                    if row == indexPath.row {
-                        continue
+            if indexPath.section != FilterSections.Categories.rawValue {
+                
+                if !value {
+                    // don't allow turning a value off
+                    if indexPath.section == FilterSections.Distance.rawValue && indexPath.row == 0 {
+                        // except for distance = Auto
+                        setSwitchState(FilterSections.Distance.rawValue, row: 1, value: true)
+                    } else {
+                        switchCell.cellSwitch.on = true
+                        return
                     }
-                    
-                    setSwitchState(indexPath.section, row: row, value: false)
-                    if let otherCell = filtersTableView.cellForRowAtIndexPath(NSIndexPath(forRow: row, inSection: indexPath.section)) as? FilterTableViewCell {
+                } else {
+                    for (row, _) in filters[indexPath.section].1.enumerate() {
+                        if row == indexPath.row {
+                            continue
+                        }
                         
-                        otherCell.cellSwitch.setOn(false, animated: true)
+                        setSwitchState(indexPath.section, row: row, value: false)
+                        if let otherCell = filtersTableView.cellForRowAtIndexPath(NSIndexPath(forRow: row, inSection: indexPath.section)) as? FilterTableViewCell {
+                            
+                            otherCell.cellSwitch.setOn(false, animated: true)
+                        }
                     }
                 }
             }
             
+            setSwitchState(indexPath.section, row: indexPath.row, value: value)
+            
+            // if changing distance = Auto, expand section
+            self.filtersTableView.reloadSections(NSIndexSet(index: FilterSections.Distance.rawValue), withRowAnimation: UITableViewRowAnimation.None)
         }
     }
     
@@ -128,7 +151,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func getSectionRow(section: Int, row: Int) -> String {
-        if section == 3 {
+        if section == FilterSections.Categories.rawValue {
             return (filterCategories[row] as! NSDictionary)["name"] as! String
         } else {
             return self.filters[section].1[row]
@@ -203,7 +226,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func getCategories() -> [String] {
         var categories: [String] = []
         
-        for (key, value) in switchStates[3]! {
+        for (key, value) in switchStates[FilterSections.Categories.rawValue]! {
             if value {
                 categories.append(filterCategories[key]["code"] as! String)
             }
