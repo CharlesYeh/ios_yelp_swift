@@ -49,11 +49,13 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+- Getting each filter table view section seemed very hacky. My solution involved checking which section was being edited.
+- Auto layout wasn't that bad, hiccuped on getting labels to expand vertically, but found a good link online.
+- Originally was confused about how to get section headers, thought creating a custom one was necessary
 
 ## License
 
-    Copyright [yyyy] [name of copyright owner]
+    Copyright 2016 Charles Yeh
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
