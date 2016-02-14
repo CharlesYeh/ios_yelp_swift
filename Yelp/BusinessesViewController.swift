@@ -8,13 +8,40 @@
 
 import UIKit
 
-class BusinessesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
+protocol FiltersDelegate {
+    func setFilters(deal: Bool, distance: Float, sortBy: CustomYelpSortMode, categories: [String])
+}
+
+enum CustomYelpSortMode: Int {
+    case BestMatched = 0, Distance, HighestRated, MostReviewed
+    
+    func getYelpSortMode() -> YelpSortMode {
+        switch (self) {
+        case .MostReviewed:
+            // we'll reorder anyways
+            return YelpSortMode.HighestRated
+        case .BestMatched:
+            return YelpSortMode.BestMatched
+        case .Distance:
+            return YelpSortMode.Distance
+        case .HighestRated:
+            return YelpSortMode.HighestRated
+        }
+    }
+}
+
+class BusinessesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, FiltersDelegate {
 
     @IBOutlet weak var listingTableView: UITableView!
 
     var isMoreDataLoading: Bool = false
-    var businesses: [Business]!
+    var businesses: [Business] = []
     
+    var searchText = ""
+    var deal = false
+    var distance: Float = 0.0
+    var sortBy: CustomYelpSortMode = .BestMatched
+    var categories: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,15 +59,35 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
         self.updateListing("")
     }
     
+    func setFilters(deal: Bool, distance: Float, sortBy: CustomYelpSortMode, categories: [String]) {
+        self.deal = deal
+        self.distance = distance
+        self.sortBy = sortBy
+        self.categories = categories
+        
+        updateListing(self.searchText)
+    }
+    
     func updateListing(term: String) {
         Business.searchWithTerm(
             term,
-//            sort: filterType,
-//            categories: categories,
+            sort: self.sortBy.getYelpSortMode(),
+            categories: self.categories,
+            deals: self.deal,
             completion: { (businesses: [Business]!, error: NSError!) -> Void in
                 
                 self.businesses = businesses
-            
+                if self.distance > 0 {
+                    self.businesses = self.businesses.filter({ (business: Business) -> Bool in Float(business.distance ?? "0.0") <= self.distance
+                    })
+                }
+                
+                if self.sortBy == .MostReviewed {
+                    self.businesses.sortInPlace({ (left: Business, right: Business) -> Bool in
+                        return left.reviewCount?.integerValue > right.reviewCount?.integerValue
+                    })
+                }
+                
                 dispatch_async(dispatch_get_main_queue(), {
                     self.listingTableView.reloadData()
                 })
@@ -48,6 +95,7 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        self.searchText = searchText
         self.updateListing(searchText)
     }
 
@@ -91,11 +139,7 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.businesses != nil {
-            return self.businesses.count
-        } else {
-            return 0
-        }
+        return self.businesses.count
     }
     
     override func didReceiveMemoryWarning() {

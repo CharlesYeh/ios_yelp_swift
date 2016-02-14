@@ -37,8 +37,8 @@
                                                         <constraint firstAttribute="width" constant="80.5" id="yB0-zv-10G"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Restaurant name" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mqS-ed-y1U">
-                                                    <rect key="frame" x="96" y="8" width="139.5" height="20.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Restaurant name" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mqS-ed-y1U">
+                                                    <rect key="frame" x="96" y="8" width="139.5" height="19"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="mj4-dG-2gh"/>
                                                     </constraints>
@@ -51,14 +51,14 @@
                                                         </mask>
                                                     </variation>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="123 Pine St" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C8b-Lb-7L5">
-                                                    <rect key="frame" x="96" y="52.5" width="73" height="17"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" misplaced="YES" text="123 Pine St" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C8b-Lb-7L5">
+                                                    <rect key="frame" x="96" y="51" width="73" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="500 reviews" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5qq-6B-3yV">
-                                                    <rect key="frame" x="207" y="31.5" width="79" height="17"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="500 reviews" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5qq-6B-3yV">
+                                                    <rect key="frame" x="207" y="30" width="79" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.48539757853403143" green="0.48539757853403143" blue="0.48539757853403143" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -78,15 +78,15 @@
                                                     <color key="textColor" red="0.54626145290000006" green="0.54626145290000006" blue="0.54626145290000006" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5He-ax-p3I">
-                                                    <rect key="frame" x="96" y="30.5" width="103" height="18"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5He-ax-p3I">
+                                                    <rect key="frame" x="96" y="29" width="103" height="18"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="103" id="1CO-44-OH4"/>
                                                         <constraint firstAttribute="height" constant="18" id="ucO-tx-mWg"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Seafood, Thai" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mEm-zT-5ZY">
-                                                    <rect key="frame" x="96" y="69" width="89.5" height="17"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Seafood, Thai" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mEm-zT-5ZY">
+                                                    <rect key="frame" x="96" y="67.5" width="486" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -95,7 +95,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="trailingMargin" secondItem="Fiu-TS-EFg" secondAttribute="trailing" id="1I2-7T-qjB"/>
                                                 <constraint firstItem="ale-48-zBE" firstAttribute="top" secondItem="61s-ed-Q3c" secondAttribute="topMargin" id="2ma-FX-y1I"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="mEm-zT-5ZY" secondAttribute="bottom" constant="0.5" id="6AS-wH-caB"/>
+                                                <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="mEm-zT-5ZY" secondAttribute="bottom" constant="-2" id="6AS-wH-caB"/>
                                                 <constraint firstItem="5qq-6B-3yV" firstAttribute="leading" secondItem="5He-ax-p3I" secondAttribute="trailing" constant="8" id="B9T-9x-RWP"/>
                                                 <constraint firstItem="ale-48-zBE" firstAttribute="leading" secondItem="61s-ed-Q3c" secondAttribute="leadingMargin" id="FdV-eP-Eht"/>
                                                 <constraint firstItem="Fiu-TS-EFg" firstAttribute="top" secondItem="V1k-T7-JcF" secondAttribute="bottom" constant="5.5" id="NNd-uA-7Bh"/>
@@ -105,13 +105,14 @@
                                                 <constraint firstAttribute="bottomMargin" secondItem="ale-48-zBE" secondAttribute="bottom" constant="2" id="YfM-fd-d7T"/>
                                                 <constraint firstItem="5qq-6B-3yV" firstAttribute="centerY" secondItem="5He-ax-p3I" secondAttribute="centerY" id="Zja-Ac-v7E"/>
                                                 <constraint firstItem="C8b-Lb-7L5" firstAttribute="top" secondItem="5He-ax-p3I" secondAttribute="bottom" constant="4" id="axr-qi-uBk"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="ale-48-zBE" secondAttribute="bottom" constant="-2" id="gTQ-Qd-2TY"/>
+                                                <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="ale-48-zBE" secondAttribute="bottom" constant="-2" id="gTQ-Qd-2TY"/>
                                                 <constraint firstItem="V1k-T7-JcF" firstAttribute="trailing" secondItem="61s-ed-Q3c" secondAttribute="trailingMargin" id="kLV-Uc-iQF"/>
                                                 <constraint firstItem="V1k-T7-JcF" firstAttribute="top" secondItem="61s-ed-Q3c" secondAttribute="topMargin" constant="2" id="lGJ-d5-M1I"/>
                                                 <constraint firstItem="mEm-zT-5ZY" firstAttribute="leading" secondItem="ale-48-zBE" secondAttribute="trailing" constant="8" id="lfK-8N-hXy"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="mEm-zT-5ZY" secondAttribute="trailing" constant="10" id="n3T-c2-Ump"/>
                                                 <constraint firstItem="C8b-Lb-7L5" firstAttribute="leading" secondItem="ale-48-zBE" secondAttribute="trailing" constant="8" id="nCW-go-grD"/>
                                                 <constraint firstItem="Fiu-TS-EFg" firstAttribute="top" secondItem="V1k-T7-JcF" secondAttribute="bottom" constant="5" id="oqK-AK-tJk"/>
-                                                <constraint firstItem="mEm-zT-5ZY" firstAttribute="top" secondItem="C8b-Lb-7L5" secondAttribute="bottom" constant="-1" id="pkO-uS-FwF"/>
+                                                <constraint firstItem="mEm-zT-5ZY" firstAttribute="top" secondItem="C8b-Lb-7L5" secondAttribute="bottom" constant="1" id="pkO-uS-FwF"/>
                                                 <constraint firstItem="5He-ax-p3I" firstAttribute="top" secondItem="mqS-ed-y1U" secondAttribute="bottom" constant="2" id="qR4-iS-nSM"/>
                                                 <constraint firstItem="V1k-T7-JcF" firstAttribute="centerY" secondItem="61s-ed-Q3c" secondAttribute="centerY" id="skt-ym-zRi"/>
                                                 <constraint firstItem="5He-ax-p3I" firstAttribute="leading" secondItem="ale-48-zBE" secondAttribute="trailing" constant="8" id="vYh-Np-CnV"/>

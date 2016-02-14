@@ -30,14 +30,31 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         filtersTableView.delegate = self
         filtersTableView.dataSource = self
         cancelButton.targetForAction("cancelAction", withSender: self)
+        
+        // initial switch states
+        switchStates[0] = [Int: Bool]()
+        // distance = Auto
+        switchStates[1] = [0: true]
+        // sort by = Best Match
+        switchStates[2] = [0: true]
+        switchStates[3] = [Int: Bool]()
     }
     
     @IBAction func onCancelButton(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.navigationController!.popViewControllerAnimated(true)
     }
     
     @IBAction func onSearchButton(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.navigationController!.popViewControllerAnimated(true)
+        
+        let vc = self.navigationController!.topViewController as! FiltersDelegate
+        
+        let deal = switchStates[0]?[0] ?? false
+        let distance = getDistance()
+        let sortBy = getSortBy()
+        let categories = getCategories()
+        
+        vc.setFilters(deal, distance: distance, sortBy: sortBy, categories: categories)
     }
 
     override func didReceiveMemoryWarning() {
@@ -109,6 +126,69 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         } else {
             return self.filters[section].1[row]
         }
+    }
+    
+    func getDistance() -> Float {
+        for (key, value) in switchStates[1]! {
+            if value {
+                switch (key) {
+                case 0:
+                    // auto
+                    return  0
+                case 1:
+                    // 0.3 miles
+                    return  0.3
+                case 2:
+                    // 1 mile
+                    return  1
+                case 3:
+                    // 5 miles
+                    return 5
+                case 4:
+                    // 20 miles
+                    return 20
+                default:
+                    return 0
+                }
+            }
+        }
+        return 0
+    }
+    
+    func getSortBy() -> CustomYelpSortMode {
+        for (key, value) in switchStates[2]! {
+            if value {
+                switch key {
+                case 0:
+                    // best matched
+                    return CustomYelpSortMode.BestMatched
+                case 1:
+                    // distance
+                    return CustomYelpSortMode.Distance
+                case 2:
+                    // rating
+                    return CustomYelpSortMode.HighestRated
+                case 3:
+                    // TODO: most reviewed
+                    return CustomYelpSortMode.MostReviewed
+                default:
+                    return CustomYelpSortMode.BestMatched
+                }
+            }
+        }
+        return CustomYelpSortMode.BestMatched
+    }
+    
+    func getCategories() -> [String] {
+        var categories: [String] = []
+        
+        for (key, value) in switchStates[3]! {
+            if value {
+                categories.append(filterCategories[key]["code"] as! String)
+            }
+        }
+        
+        return categories
     }
     
     class func categories() -> NSArray {
