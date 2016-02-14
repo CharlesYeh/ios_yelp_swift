@@ -9,11 +9,11 @@
 import UIKit
 
 class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SwitchCellDelegate {
-
     
     @IBOutlet weak var cancelButton: UIButton!
-    
     @IBOutlet weak var filtersTableView: UITableView!
+    
+    var switchStates = [Int: [Int: Bool]]()
     
     let filters = [
         ("Deal", ["Offering a Deal"]),
@@ -69,6 +69,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let cell = tableView.dequeueReusableCellWithIdentifier("filters.item")! as! FilterTableViewCell
         
         cell.cellLabel.text = getSectionRow(indexPath.section, row: indexPath.row)
+        cell.cellSwitch.on = (switchStates[indexPath.section] ?? [Int: Bool]())[indexPath.row] ?? false
         cell.delegate = self
         
         return cell
@@ -76,7 +77,12 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     func switchCell(switchCell: FilterTableViewCell, didChangeValue value: Bool) {
         
+        if let indexPath = filtersTableView.indexPathForCell(switchCell) {
+            var sectionStates = switchStates[indexPath.section] ?? [Int: Bool]()
         
+            sectionStates[indexPath.row] = value
+            switchStates[indexPath.section] = sectionStates
+        }
     }
     
     func getSectionRow(section: Int, row: Int) -> String {
@@ -86,7 +92,6 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             return self.filters[section].1[row]
         }
     }
-    
     
     class func categories() -> NSArray {
         return [
