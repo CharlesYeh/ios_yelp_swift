@@ -12,8 +12,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var filtersTableView: UITableView!
-    
-    var switchStates = [Int: [Int: Bool]]()
+        var switchStates = [Int: [Int: Bool]]()
     
     let filters = [
         ("Deal", ["Offering a Deal"]),
@@ -30,14 +29,22 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         filtersTableView.delegate = self
         filtersTableView.dataSource = self
         cancelButton.targetForAction("cancelAction", withSender: self)
+    }
+    
+    func initSwitchStates(deal: Bool, distance: Float, sortBy: CustomYelpSortMode, categories: [String]) {
         
-        // initial switch states
-        switchStates[0] = [Int: Bool]()
-        // distance = Auto
-        switchStates[1] = [0: true]
-        // sort by = Best Match
-        switchStates[2] = [0: true]
+        switchStates[0] = [0: deal]
+        switchStates[1] = [distanceToSwitchStateIndex(distance): true]
+        switchStates[2] = [sortBy.rawValue: true]
+        
         switchStates[3] = [Int: Bool]()
+        for (index, category) in filterCategories.enumerate() {
+            if let code = category["code"] as? String {
+                if categories.contains(code) {
+                    self.switchStates[3]![index] = true
+                }
+            }
+        }
     }
     
     @IBAction func onCancelButton(sender: AnyObject) {
@@ -153,6 +160,20 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
         }
         return 0
+    }
+    
+    func distanceToSwitchStateIndex(distance: Float) -> Int {
+        if distance == 0 {
+            return 0
+        } else if (distance <= 0.3) {
+            return 1
+        } else if (distance <= 1) {
+            return 2
+        } else if (distance <= 5) {
+            return 3
+        } else {
+            return 4
+        }
     }
     
     func getSortBy() -> CustomYelpSortMode {
